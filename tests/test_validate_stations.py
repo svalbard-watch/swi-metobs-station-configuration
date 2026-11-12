@@ -61,6 +61,14 @@ class StructureTest(unittest.TestCase):
         self.assertTrue(check_station({**MOBILE, "import_function": "netcdf_boat"}, "mobile"))
         self.assertTrue(check_station({k: v for k, v in MOBILE.items() if k != "import_function"}, "mobile"))
 
+    def test_a_mobile_station_with_a_datasource_needs_no_import_function(self):
+        without = {k: v for k, v in MOBILE.items() if k != "import_function"}
+        self.assertEqual(check_station({**without, "datasource": "UNISPortalSource"}, "mobile"), [])
+
+    def test_a_given_import_function_is_still_checked_next_to_a_datasource(self):
+        broken = {**MOBILE, "datasource": "UNISPortalSource", "import_function": "netcdf_boat"}
+        self.assertTrue(check_station(broken, "mobile"))
+
     def test_variables_must_be_an_object_of_strings_or_null(self):
         self.assertTrue(check_station(fixed(variables=["airTemperature"]), "fixed"))
         self.assertTrue(check_station(fixed(variables={"airTemperature": ""}), "fixed"))

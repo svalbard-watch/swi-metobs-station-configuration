@@ -743,5 +743,55 @@
         "icon": "/static/images/metAWS.svg",
         "lat": 78.18,
         "lon": 16.41
+    },
+    {
+        "id": "adventdalen_fivelflyene_10minute",
+        "name": "ADVENTDALEN - FIVELFLYENE",
+        "project": "UNIS AWS",
+        "url": "https://observations.unis.no/catalog",
+        "variables": {
+            "airTemperature": "air_temperature_mean",
+            "windSpeed": "wind_speed",
+            "windDirection": "wind_from_direction",
+            "relativeHumidity": "relative_humidity",
+            "airPressure": "air_pressure_mean"
+        },
+        "icon": "/static/images/metAWS.svg",
+        "lat": 78.19466,
+        "lon": 16.0261944,
+        "datasource": "UNISPortalSource"
+    },
+    {
+        "id": "breinosa_eiscat_1hour",
+        "name": "BREINOSA - EISCAT MAST",
+        "project": "UNIS AWS",
+        "url": "https://observations.unis.no/catalog",
+        "variables": {
+            "airTemperature": "air_temperature_3m",
+            "relativeHumidity": "relative_humidity_3m",
+            "windSpeed": "wind_speed_15m",
+            "windDirection": "wind_from_direction_15m"
+        },
+        "icon": "/static/images/metAWS.svg",
+        "lat": 78.15284,
+        "lon": 16.03792,
+        "datasource": "UNISPortalSource"
+    },
+    {
+        "id": "breinosa_kho_aws_05minutes",
+        "name": "BREINOSA - KJELL HENRIKSEN OBSERVATORY",
+        "project": "UNIS AWS",
+        "url": "https://observations.unis.no/catalog",
+        "variables": {
+            "airTemperature": "air_temperature",
+            "windSpeed": "wind_speed",
+            "windDirection": "wind_from_direction",
+            "relativeHumidity": "relative_humidity",
+            "airPressure": "air_pressure"
+        },
+        "icon": "/static/images/metAWS.svg",
+        "lat": 78.14664,
+        "lon": 16.03815,
+        "datasource": "UNISPortalSource"
     }
 ]
