@@ -760,5 +760,21 @@
         "lat": 78.19466,
         "lon": 16.0261944,
         "datasource": "UNISPortalSource"
+    },
+    {
+        "id": "breinosa_eiscat_1hour",
+        "name": "BREINOSA - EISCAT MAST",
+        "project": "UNIS AWS",
+        "url": "https://observations.unis.no/catalog",
+        "variables": {
+            "airTemperature": "air_temperature_3m",
+            "relativeHumidity": "relative_humidity_3m",
+            "windSpeed": "wind_speed_15m",
+            "windDirection": "wind_from_direction_15m"
+        },
+        "icon": "/static/images/metAWS.svg",
+        "lat": 78.15284,
+        "lon": 16.03792,
+        "datasource": "UNISPortalSource"
     }
 ]
