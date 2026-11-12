@@ -41,11 +41,15 @@ jobs:
           set -euo pipefail
           curl -fsSL https://raw.githubusercontent.com/svalbard-watch/swi-production-deployment/main/compose.yml \
             > "$RUNNER_TEMP/compose.yml"
-          IMAGE="$(grep -oE 'ghcr.io/unis-svalbard-weather-information/swi-metobs-caching:[^[:space:]]+' "$RUNNER_TEMP/compose.yml" | head -n 1)"
-          if [ -z "$IMAGE" ]; then
+          # Only the tag is taken from compose.yml. It may still name the old
+          # organisation's registry path, which can no longer be pulled; the
+          # images are published under this repository's owner.
+          TAG="$(grep -oE 'ghcr.io/[^/[:space:]]+/swi-metobs-caching:[^[:space:]]+' "$RUNNER_TEMP/compose.yml" | head -n 1 | sed 's#.*/swi-metobs-caching:##')"
+          if [ -z "$TAG" ]; then
             echo "::error::no swi-metobs-caching image found in swi-production-deployment compose.yml"
             exit 1
           fi
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/swi-metobs-caching:${TAG}"
           echo "Checking against $IMAGE"
           echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
 
