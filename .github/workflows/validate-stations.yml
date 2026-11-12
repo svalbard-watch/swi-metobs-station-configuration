@@ -35,31 +35,19 @@ jobs:
       - name: Check the structure of the station files
         run: python3 scripts/validate_stations.py stations
 
-      - name: Find the swi-metobs-caching image deployed in production
-        id: image
+      # Each `datasource` must be one the caching code knows, otherwise it falls back to
+      # FrostSource without an error. A new source therefore has to be released in
+      # swi-metobs-caching before a station can use it. The check always runs against the
+      # newest published image: `--pull always` makes docker ask the registry for the
+      # current `latest` instead of reusing a copy that is already on the runner.
+      - name: Check the datasource names against the latest swi-metobs-caching image
+        env:
+          IMAGE: ghcr.io/${{ github.repository_owner }}/swi-metobs-caching:latest
         run: |
           set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/svalbard-watch/swi-production-deployment/main/compose.yml \
-            > "$RUNNER_TEMP/compose.yml"
-          # Only the tag is taken from compose.yml. It may still name the old
-          # organisation's registry path, which can no longer be pulled; the
-          # images are published under this repository's owner.
-          TAG="$(grep -oE 'ghcr.io/[^/[:space:]]+/swi-metobs-caching:[^[:space:]]+' "$RUNNER_TEMP/compose.yml" | head -n 1 | sed 's#.*/swi-metobs-caching:##')"
-          if [ -z "$TAG" ]; then
-            echo "::error::no swi-metobs-caching image found in swi-production-deployment compose.yml"
-            exit 1
-          fi
-          IMAGE="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/swi-metobs-caching:${TAG}"
-          echo "Checking against $IMAGE"
-          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
-
-      # Each `datasource` must be one the deployed code knows, otherwise it falls back to
-      # FrostSource without an error. A new source therefore has to be deployed in
-      # swi-metobs-caching before a station can use it.
-      - name: Check the datasource names against the deployed code
-        env:
-          IMAGE: ${{ steps.image.outputs.image }}
-        run: |
-          docker run --rm -e PYTHONPATH=/swi -w /swi -v "$PWD:/repo:ro" \
+          IMAGE="${IMAGE,,}"
+          docker pull "$IMAGE"
+          docker image inspect "$IMAGE" --format 'Checking against {{index .RepoDigests 0}}'
+          docker run --rm --pull always -e PYTHONPATH=/swi -w /swi -v "$PWD:/repo:ro" \
             --entrypoint python3 "$IMAGE" \
             /repo/scripts/validate_stations.py /repo/stations --check-datasources
