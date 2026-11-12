@@ -69,5 +69,22 @@
         },
         "icon": "/static/images/iwoos.svg",
         "datasource": "IWOOSNetcdfSource"
+    },
+    {
+        "id": "hanna_resvoll_10min",
+        "name": "R/V Hanna Resvoll",
+        "project": "IWIN Boats",
+        "url": "https://observations.unis.no/catalog",
+        "variables": {
+            "airTemperature": "air_temperature",
+            "seaSurfaceTemperature": "sea_surface_temperature",
+            "windSpeed": "wind_speed_mean",
+            "windDirection": "wind_from_direction_mean",
+            "windSpeedGust": "wind_speed_max",
+            "relativeHumidity": "relative_humidity",
+            "airPressure": "air_pressure"
+        },
+        "icon": "/static/images/boat/hanna_resvoll.svg",
+        "datasource": "UNISPortalSource"
     }
 ]
