@@ -743,5 +743,22 @@
         "icon": "/static/images/metAWS.svg",
         "lat": 78.18,
         "lon": 16.41
+    },
+    {
+        "id": "adventdalen_fivelflyene_10minute",
+        "name": "ADVENTDALEN - FIVELFLYENE",
+        "project": "UNIS AWS",
+        "url": "https://observations.unis.no/catalog",
+        "variables": {
+            "airTemperature": "air_temperature_mean",
+            "windSpeed": "wind_speed",
+            "windDirection": "wind_from_direction",
+            "relativeHumidity": "relative_humidity",
+            "airPressure": "air_pressure_mean"
+        },
+        "icon": "/static/images/metAWS.svg",
+        "lat": 78.19466,
+        "lon": 16.0261944,
+        "datasource": "UNISPortalSource"
     }
 ]
