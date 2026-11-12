@@ -39,7 +39,7 @@ jobs:
         id: image
         run: |
           set -euo pipefail
-          curl -fsSL https://raw.githubusercontent.com/UNIS-Svalbard-Weather-Information/swi-production-deployment/main/compose.yml \
+          curl -fsSL https://raw.githubusercontent.com/svalbard-watch/swi-production-deployment/main/compose.yml \
             > "$RUNNER_TEMP/compose.yml"
           IMAGE="$(grep -oE 'ghcr.io/unis-svalbard-weather-information/swi-metobs-caching:[^[:space:]]+' "$RUNNER_TEMP/compose.yml" | head -n 1)"
           if [ -z "$IMAGE" ]; then
