@@ -74,11 +74,14 @@ def check_station(station, kind, known_datasources=None):
         if not (_is_number(lon) and -180 <= lon <= 180):
             problems.append("'lon' must be a number between -180 and 180")
 
-    if kind == "mobile" and not (
-        isinstance(station.get("import_function"), str)
-        and IMPORT_FUNCTION.fullmatch(station["import_function"])
-    ):
-        problems.append("'import_function' must look like 'module.function'")
+    # Legacy field: required for mobile stations that have no datasource, optional
+    # (but still well-formed) when a datasource serves the station.
+    if kind == "mobile" and ("import_function" in station or "datasource" not in station):
+        if not (
+            isinstance(station.get("import_function"), str)
+            and IMPORT_FUNCTION.fullmatch(station["import_function"])
+        ):
+            problems.append("'import_function' must look like 'module.function'")
     return problems
 
 
